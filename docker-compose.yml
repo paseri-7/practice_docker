@@ -8,25 +8,37 @@ services:
       dockerfile: ./docker/apache/Dockerfile
     ports:
       - 80:80
-    environment:
-      COMPOSER_ALLOW_SUPERUSER: 1
     volumes:
-      - ./webapp:/var/www/html
+      #laravelプロジェクトをコンテナ内の/vae/www/htmlとマウントする
+      - ../${REPOSITORY_NAME}:/var/www/html
+      #./docker/apache 内のファイルをコンテナ内の正しい場所とマウントする
+      - ./docker/apache/config/000-default.conf:/etc/apache2/sites-available/000-default.conf
       - ./docker/apache/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      - TZ=${TZ}
     depends_on:
       - db
     networks:
       - net1
   db:
+    image: mysql:8.0.30
     container_name: db
-    build:
-      context: .
-      dockerfile: ./docker/db/Dockerfile
+
+    #build:
+    #context: .
+    #dockerfile: ./docker/db/Dockerfile
+
+    #DBコンテナ内のデータをマウントし、データが消えないようにする
+    volumes:
+      - db-store:/var/lib/mysql
+
+    #mysqlの各種設定を記載(.envより取得)
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      TZ: "Asia/Tokyo"
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - TZ=${TZ}
     networks:
       - net1
     ports:
