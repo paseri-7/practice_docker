@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  apache:
-    container_name: apache
+  web:
+    container_name: web
     build:
       context: .
       dockerfile: ./docker/apache/Dockerfile
@@ -45,3 +45,5 @@ services:
       - 3306:3306
 networks:
   net1:
+volumes:
+  db-store:

@@ -8,7 +8,7 @@ RUN apt-get update \
     && apt-get install -y libzip-dev zip unzip vim libpq-dev locales \
     && docker-php-ext-configure zip \
     # docker php には mysql 用のドライバが未インストールのため追加する
-    && docker-php-ext-install pdo_pgsql zip \
+    && docker-php-ext-install pdo_mysql zip \
     # a2emod rewrite をして apache に rewrite モジュールを追加。これをしないと Laravel でルート以外にアクセスできない
     && a2enmod rewrite
 
