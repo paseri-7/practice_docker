@@ -38,9 +38,9 @@ RUN npm install -g npm@8.19.3
 
 WORKDIR /var/www/html
 
-#COPY ./webapp /var/www/html
+#for vite
+EXPOSE 5173
+#for storybook
+EXPOSE 6006
 
-#RUN chown www-data storage/ -R \
-#RUN chmod -R 777 storage bootstrap/cache \
- #&& composer install\
- #&& npm install
+#COPY ./webapp /var/www/html

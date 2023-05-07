@@ -8,6 +8,8 @@ services:
       dockerfile: ./docker/apache/Dockerfile
     ports:
       - 80:80
+      - 5137:5173
+      - 6006:6006
     volumes:
       #laravelプロジェクトをコンテナ内の/vae/www/htmlとマウントする
       - ../${REPOSITORY_NAME}:/var/www/html
