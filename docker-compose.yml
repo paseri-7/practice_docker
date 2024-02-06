@@ -32,7 +32,7 @@ services:
 
     #DBコンテナ内のデータをマウントし、データが消えないようにする
     volumes:
-      - db-store:/var/lib/mysql
+      - db-store20240204:/var/lib/mysql
 
     #mysqlの各種設定を記載(.envより取得)
     environment:
@@ -48,4 +48,4 @@ services:
 networks:
   net1:
 volumes:
-  db-store:
+  db-store20240204:
